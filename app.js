@@ -14,7 +14,8 @@ const diceElement = document.querySelectorAll('.dice');
 let scores = [0, 0],
     dices = [0, 0],
     activePlayer = 0,
-    current = 0;
+    current = 0,
+    limitValue = 100;
 
 const initGame = () => {
   document.querySelector('#current-0').textContent = 0;
@@ -25,6 +26,8 @@ const initGame = () => {
 }
 
 initGame();
+
+document.querySelector('.input-limit').addEventListener('change', (e) => limitValue = e.target.value ? e.target.value : 100 );
 
 document.querySelector('.btn-roll').addEventListener('click', function() {
   document.querySelectorAll('.dice').forEach((el, index) => {
@@ -38,12 +41,7 @@ document.querySelector('.btn-roll').addEventListener('click', function() {
 
   if (!dices.includes(RESET_VALUE) && !doubleDices) {
     current += dices.reduce((sum, x) => sum + x);
-    document.getElementById('current-'+activePlayer).textContent = current;
-
-    if (scores[activePlayer] + current >= 100) {
-      alert(`Player ${activePlayer} won!!!`);
-    }
-
+    document.getElementById(`current-${activePlayer}`).textContent = current;
   } else {
     changePlayer();
   }
@@ -61,6 +59,7 @@ const changePlayer = () => {
 document.querySelector('.btn-hold').addEventListener('click', function() {
   scores[activePlayer] += current;
   document.querySelector(`#score-${activePlayer}`).textContent = scores[activePlayer];
+  if (scores[activePlayer] + current >= limitValue) setTimeout(() => alert(`Player ${activePlayer} won!!!`), 1000);
   changePlayer();
 });
 

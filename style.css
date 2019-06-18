@@ -76,7 +76,7 @@ body {
     color: orange;
     top: -7px;
     right: 10px;
-    
+
 }
 
 .player-current-box {
@@ -151,3 +151,15 @@ i {
 
 .winner { background-color: #f7f7f7; }
 .winner .player-name { font-weight: 300; color: #EB4D4D; }
+
+.input-limit{
+  position: absolute;
+  bottom: 20px;
+  left: 50%;
+  transform: translateX(-50%);
+  border: 1px solid #000;
+  padding: 10px;
+  font-size: 12px;
+  width: 50%;
+  text-align: center;
+}
