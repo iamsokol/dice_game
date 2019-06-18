@@ -11,11 +11,29 @@ GAME RULES:
 
 const RESET_VALUE = 2;
 const diceElement = document.querySelectorAll('.dice');
-let scores = [0, 0],
+const firstPlayerName = document.querySelector("#name-0");
+const secondPlayerName = document.querySelector("#name-1");
+let player1,
+    player2,
+    scores = [0, 0],
     dices = [0, 0],
     activePlayer = 0,
     current = 0,
     limitValue = 100;
+
+function Gamer(name, score = 0) {
+  this.name = name;
+  this.score = score;
+}
+Gamer.prototype.setScore = function (score) {
+  this.score = score;
+};
+Gamer.prototype.getScore = function () {
+  return this.score;
+};
+Gamer.prototype.resetScore = function () {
+  this.score = 0;
+};
 
 const initGame = () => {
   document.querySelector('#current-0').textContent = 0;
@@ -23,11 +41,20 @@ const initGame = () => {
   document.querySelector('#score-0').textContent = 0;
   document.querySelector('#score-1').textContent = 0;
   diceElement.forEach((el) => el.style.display = 'none');
+  player1 = new Gamer();
+  player2 = new Gamer();
+  let players = [player1, player2];
+  players.forEach((el, i) =>{
+    while(!playerName) var playerName = prompt(`Имя ${i + 1} участника`);
+    el.name = playerName;
+  });
+  firstPlayerName.textContent = player1.name;
+  secondPlayerName.textContent = player2.name;
 }
 
 initGame();
 
-document.querySelector('.input-limit').addEventListener('change', (e) => limitValue = e.target.value ? e.target.value : 100 );
+document.querySelector('.input-limit').addEventListener('change', (e) => limitValue = e.target.value ? +e.target.value : 100 );
 
 document.querySelector('.btn-roll').addEventListener('click', function() {
   document.querySelectorAll('.dice').forEach((el, index) => {
@@ -59,7 +86,7 @@ const changePlayer = () => {
 document.querySelector('.btn-hold').addEventListener('click', function() {
   scores[activePlayer] += current;
   document.querySelector(`#score-${activePlayer}`).textContent = scores[activePlayer];
-  if (scores[activePlayer] + current >= limitValue) setTimeout(() => alert(`Player ${activePlayer} won!!!`), 1000);
+  if (scores[activePlayer] >= limitValue) setTimeout(() => alert(`Player ${activePlayer ? player1.name : player2.name} won!!!`), 300);
   changePlayer();
 });
 
