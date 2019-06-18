@@ -9,38 +9,41 @@ GAME RULES:
 
 */
 
-const RESET_VALUE = 1;
-
-let scores = [0, 0];
-let activePlayer = 0;
-let current = 0;
+const RESET_VALUE = 2;
 const diceElement = document.querySelectorAll('.dice');
+let scores = [0, 0],
+    dices = [0, 0],
+    activePlayer = 0,
+    current = 0;
 
 const initGame = () => {
   document.querySelector('#current-0').textContent = 0;
   document.querySelector('#current-1').textContent = 0;
   document.querySelector('#score-0').textContent = 0;
   document.querySelector('#score-1').textContent = 0;
-  document.querySelectorAll('.dice').forEach((el) => el.style.display = 'none');
+  diceElement.forEach((el) => el.style.display = 'none');
 }
 
 initGame();
 
 document.querySelector('.btn-roll').addEventListener('click', function() {
-  document.querySelectorAll('.dice').forEach((el) => {
+  document.querySelectorAll('.dice').forEach((el, index) => {
     let dice = Math.floor(Math.random() * 6) + 1;
     el.style.display = 'block';
+    dices[index] = dice;
     el.src = `dice-${dice}.png`;
   });
 
-  if (dice !== RESET_VALUE) {
-    current += dice;
+  const doubleDices = dices.every((val, i, arr) => val == arr[0]);
+
+  if (!dices.includes(RESET_VALUE) && !doubleDices) {
+    current += dices.reduce((sum, x) => sum + x);
     document.getElementById('current-'+activePlayer).textContent = current;
 
-    if (scores[activePlayer] + current >= 20) {
+    if (scores[activePlayer] + current >= 100) {
       alert(`Player ${activePlayer} won!!!`);
     }
-    
+
   } else {
     changePlayer();
   }
@@ -51,7 +54,7 @@ const changePlayer = () => {
   document.getElementById('current-'+activePlayer).textContent = 0;
   document.querySelector(`.player-${activePlayer}-panel`).classList.toggle('active');
   activePlayer = +!activePlayer;
-  diceElement.style.display = 'none';
+  diceElement.forEach((el) => el.style.display = 'none');
   document.querySelector(`.player-${activePlayer}-panel`).classList.toggle('active');
 }
 
