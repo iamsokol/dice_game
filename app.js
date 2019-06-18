@@ -14,23 +14,24 @@ const RESET_VALUE = 1;
 let scores = [0, 0];
 let activePlayer = 0;
 let current = 0;
-const diceElement = document.querySelector('.dice');
+const diceElement = document.querySelectorAll('.dice');
 
 const initGame = () => {
   document.querySelector('#current-0').textContent = 0;
   document.querySelector('#current-1').textContent = 0;
   document.querySelector('#score-0').textContent = 0;
   document.querySelector('#score-1').textContent = 0;
-  diceElement.style.display = 'none';
+  document.querySelectorAll('.dice').forEach((el) => el.style.display = 'none');
 }
 
 initGame();
 
 document.querySelector('.btn-roll').addEventListener('click', function() {
-  let dice = Math.floor(Math.random() * 6) + 1;
-
-  diceElement.src = `dice-${dice}.png`;
-  diceElement.style.display = 'block';
+  document.querySelectorAll('.dice').forEach((el) => {
+    let dice = Math.floor(Math.random() * 6) + 1;
+    el.style.display = 'block';
+    el.src = `dice-${dice}.png`;
+  });
 
   if (dice !== RESET_VALUE) {
     current += dice;
