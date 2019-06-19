@@ -76,7 +76,7 @@ body {
     color: orange;
     top: -7px;
     right: 10px;
-    
+
 }
 
 .player-current-box {
@@ -139,12 +139,32 @@ i {
 
 .dice {
     position: absolute;
-    left: 50%;
+    left: 43%;
     top: 178px;
     transform: translateX(-50%);
     height: 100px;
     box-shadow: 0px 10px 60px rgba(0, 0, 0, 0.10);
 }
+.dice:last-child {
+  left: 57%;
+}
 
 .winner { background-color: #f7f7f7; }
 .winner .player-name { font-weight: 300; color: #EB4D4D; }
+
+
+.input-block{
+  position: absolute;
+  bottom: 20px;
+  left: 50%;
+  transform: translateX(-50%);
+  text-align: center;
+}
+
+.input-limit{
+  margin-top: 15px;
+  border: 1px solid #000;
+  padding: 10px 5px 10px 25px;
+  font-size: 12px;
+  width: 80px;
+}
